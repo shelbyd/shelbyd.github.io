@@ -1,10 +1,10 @@
 # Site settings
-title: Coding Delight
+title: Coding Joy
 email: shelby@shelbyd.com
 description: "Working every day to make life as a programmer more delightful."
 baseurl: ""
 url: "http://blog.shelbyd.com"
-twitter_username: codingdelight
+twitter_username: codingjoy
 github_username:  shelbyd
 #facebook_username:  IronSummitMedia
 default_header_image: "img/black.jpg"
