@@ -10,7 +10,7 @@ github_username:  shelbyd
 default_header_image: "img/black.jpg"
 
 # Build settings
-markdown: kramdown
+markdown: redcarpet
 highlighter: pygments
 permalink: pretty
 paginate: 5
