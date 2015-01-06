@@ -2,7 +2,7 @@
 layout:     post
 author:     Shelby Doolittle
 title:      "A Better Life through Live Templates"
-subtitle:   "How to type less and make fewer mistakes at the same time."
+subtitle:   "How to type less and make fewer mistakes at the same time"
 date:       2015-01-01 19:46
 header-img: "img/train.jpg"
 ---

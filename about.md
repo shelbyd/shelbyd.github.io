@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Shelby Doolittle"
-description: "The man behind the blog."
+description: "The man behind the blog"
 header-img: "img/about-bg.jpg"
 ---
 
