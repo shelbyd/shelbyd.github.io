@@ -11,6 +11,8 @@ As usual, this post includes all the articles, blog posts, videos, etc that I co
 At the end is my top 3 suggestions for what to consume if you have limited time.
 
 * [On professionalism in software](http://jakewins.com/p/professionalism/)
+* [Code Review Processes](http://matthewmachuga.com/blog/2015/code-review-processes.html)
+* [Redundancy vs dependencies: which is worse?](http://yosefk.com/blog/redundancy-vs-dependencies-which-is-worse.html)
 
 Top Three
 ---------
