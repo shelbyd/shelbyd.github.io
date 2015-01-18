@@ -22,6 +22,8 @@ At the end is my top 3 suggestions for what to consume if you have limited time.
 * [Agile Is Dead (Long Live Agility)](http://pragdave.me/blog/2014/03/04/time-to-kill-agile/)
 * [Agile Is Dead: The Angry Developer Version](http://rubiquity.com/2014/03/12/agile-is-dead-angry-developer.html)
 * [Kevlin Henney - "Worse Is Better, for Better or for Worse"](https://www.youtube.com/watch?v=w3JkpQAbTA4)
+* [Rails Conf 2013 The Magic Tricks of Testing by Sandi Metz](https://www.youtube.com/watch?v=URSWYvyc42M)
+* [Katrina Owen - 467 tests, 0 failures, 0 confidence](http://vimeo.com/68730418)
 
 Top Three
 ---------
