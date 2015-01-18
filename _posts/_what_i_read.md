@@ -8,9 +8,9 @@ date:       2015-01-01 00:00
 ---
 
 As usual, this post includes all the articles, blog posts, videos, etc that I consumed this last week.
-At the end is my top 3 suggestions for what to consume if you have limited time.
+At the end is my ordered suggestions for what I would recommend.
 
-Top Three
+Top Posts
 ---------
 
 1. 
