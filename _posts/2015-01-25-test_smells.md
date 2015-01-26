@@ -7,17 +7,18 @@ date:       2015-01-25 15:00
 header-img: "img/new-car-smell.jpg"
 ---
 
-Code smells are a common code patterns and a sign that your code might not be maintainable in the future.
+Code smells are common patterns that signal your code might not be maintainable in the future.
+They come with strategies for cleaning up the smells, resulting in better code.
 They were popularized by Martin Fowler in his book [Refactoring](http://martinfowler.com/books/refactoring.html).
 If you're not familiar with code smells I highly suggest reading that book.
 
-Tests are technically code, but don't experience the same smells as production code.
+Tests are technically code, but don't experience the same smells.
 Test Driven Design says that one should listen to feedback from tests as signs that code should be refactored.
 But what does this feedback look like?
 
 We'll identify some common bad patterns that appear in test code and discuss what they say about the corresponding production code.
-As with code smells, these are just common patterns that lead to unmaintainable code.
-It would be a fool's errand to try to eliminate these patterns entirely from your test code.
+As with code smells, these are just common patterns that lead to unmaintainable systems.
+It would be a fool's errand to try to eliminate these patterns entirely from your codebase.
 So use them as design tools and keep a look out, knowing you can ignore them if you can convince someone else it's a good idea.
 
 The Smells
@@ -54,17 +55,17 @@ Spidering in unit tests is a sign that you are violating the [Single Responsibil
 Business Setup
 --------------
 
-Your tests run business logic in setup code.
+Your tests run business logic in setup.
 
 In order to set up for one test, you run the real implementation of the same or another class.
 Hopefully, the class under test interacts with that other class directly.
 
 Business setup is a sign that your code is tightly coupled.
-In order for one test to pass, you need to run real code.
-This means that if that real code changes and breaks, your test breaks and it's not clear why.
+In order for one test to pass, you need to run real implementations.
+This means that if that implementation code changes and breaks, your test breaks and it's not clear why.
 
-Note: this real code is not limited to code inside your codebase.
-One could also run real code from a library to setup some state for a test.
+Note: this is not limited to code you control.
+You could also run real code from a library to setup some state for a test.
 
 - Replace real code setup with stubs of dependencies
 - Move code that relied on that setup into the dependencies that are now stubbed out
@@ -75,7 +76,7 @@ Shared Expectations
 Your tests have different setups that result in the same expectation(s).
 
 This is a sign that your code has many paths to the same result.
-That is fine, but the code you're testing can be broken up.
+That is fine, but what you're testing can be broken up.
  
 - Extract the result into a method on an object 
 - Replace the checks of the result with an expectation on a mock
@@ -87,11 +88,11 @@ Setup Expectations
 Your tests can fail before getting to the action of your test.
 
 Don't do this.
-If you feel the need to have an expectation in your setup code, you need simpler setup or to extract a dependency that can encapsulate that setup in a stub.
+If you feel the need to have an expectation in your setup, you need simpler setup or to extract a dependency that can encapsulate that setup in a stub.
 Also, if that expectation starts to fail, many tests will fail and you cannot identify the interesting failures.
 
-- Don't include expectations in setup code
-- If tempted to include expectations in setup code, create a new test that has that expectation
+- Don't include expectations in setup
+- If tempted to include expectations in setup, create a new test that has that expectation
 
 Big Actions
 -----------
@@ -100,8 +101,8 @@ Your tests have more than 1 line of action code.
 
 This is a sign that the interface you're testing is suboptimal.
 An interface that requires a client call methods in a certain order will cause hard to diagnose bugs in production.
-These multiple lines can probably be moved into one method in the public interface.
-This has the nice effect of clients needing to know less about your code.
+These multiple lines can be consolidated into one method in the public interface.
+This has the nice effect of clients needing to know less.
 
 - Change the public interface of the code under test to require only one call to accomplish some goal
 
@@ -111,7 +112,7 @@ Fat Contexts
 Your tests have more than 1 line of setup per context.
 
 This causes problems when trying to read the tests.
-If someone who is not familiar with the code cannot read the test and immediately identify which line corresponds to which context, your code has this smell.
+If someone who is not familiar with the system cannot read the test and immediately identify which line corresponds to which context, your tests have this smell.
 
 This is a sign that the contexts with more than one line could be extracted into a query method on a dependency.
 Then you could stub out the result of the query method to be your one line of setup for the context.
@@ -145,18 +146,18 @@ So be wary of tests that have more than one "type" of expectation.
 Again type is loosely defined.
 
 An example may be making expectations of both the return value of a method and verifying it calls a method on a dependency in the same test.
-Having tests with this problem result in vague, confusing test descriptions that obscure the result that matters.
+Having tests with this problem results in vague, confusing test descriptions that obscure the result that matters.
 
-- Separate types of expectations into multiple tests with the same setup and action code
+- Separate types of expectations into multiple tests with the same setup and action
 
 Popular Fake
 ------------
 
 Your tests have a stub/mock used in most every test file.
 
-Your code has one dependency that everything depends on.
+Your code has one dependency that everything uses.
 This is a sign that your code is working at too low a level of abstraction.
-If most of your code calls an HTTP wrapper, for example, you could likely abstract another object that encapsulated retrieving one type of business object over HTTP.
+If most of your code calls an HTTP wrapper, for example, you could likely abstract one or more objects that encapsulate the tasks for which you use the HTTP wrapper.
 
 - Introduce abstractions around common tasks performed with the shared dependency
 - Replace fakes of the dependency with the new abstraction
@@ -169,15 +170,15 @@ It is hard to tell which setup is related to which context.
 Someone unfamiliar with the codebase cannot verify the tests are correct.
 If a new team member cannot read a test and see that the setup corresponds exactly to the test description, they cannot trust the test.
 
-- Line up setup code in tests exactly with test descriptions
-- Have setup code appear in the same order as the contexts appear in the test descriptions
+- Arrange setup exactly with test descriptions
+- Have setup appear in the same order as the contexts appear in the test descriptions
 
 Conclusion
 ----------
 
 These are common patterns I've found to be a sign of problematic tests.
 Note that these say nothing about the speed of tests or many other metrics characteristic of good test suites.
-Though, I have found that tests suites with fewer test smells generally perform well on other metrics for good test suites.
+Though, I have found tests suites with fewer test smells generally perform well on the other metrics.
 
-Keeping these patterns in mind have helped guide me in identifying problems in my test suites.
+Keeping these patterns in mind has helped guide me in identifying problems in my test suites.
 They've led me to writing easily understood tests and maintainable code.
