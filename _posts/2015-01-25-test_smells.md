@@ -21,6 +21,10 @@ As with code smells, these are just common patterns that lead to unmaintainable 
 It would be a fool's errand to try to eliminate these patterns entirely from your codebase.
 So use them as design tools and keep a look out, knowing you can ignore them if you can convince someone else it's a good idea.
 
+Over the next few weeks, I'll be going deep into each smell.
+Complete with refactorings to fix the problems.
+Let's get to it!
+
 The Smells
 ----------
 
