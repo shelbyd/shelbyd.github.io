@@ -1,0 +1,58 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Webcam Utils</title>
+    <meta name="description" content="Webcam Utils">
+
+    <meta property="og:title" content="Webcam Utils">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://shelbyd.github.io/webutils/camera.html">
+    <meta property="og:description" content="Webcam Utils">
+</head>
+
+<body>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            max-width: 1080px;
+            margin: auto;
+        }
+
+        .container > :not(:first-child) {
+            margin-top: 8px;
+        }
+    </style>
+
+    <div class="container">
+        <video id="video" width="640" height="480" autoplay></video>
+        <button id="snap">Next Input</button>
+    </div>
+
+    <script type="text/javascript">
+        async function init() {
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
+
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+            var video = document.getElementById('video');
+            video.srcObject = stream;
+            video.play();
+
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            for (const d of devices) {
+                console.log(d);
+            }
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
