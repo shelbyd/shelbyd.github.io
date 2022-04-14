@@ -51,7 +51,10 @@
 
         async function useDevice(index) {
             const id = devices[index].deviceId;
-            const stream = await navigator.mediaDevices.getUserMedia({ video: { exact: id }, audio: false });
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: { deviceId: { exact: id } },
+                audio: false,
+            });
             var video = document.getElementById('video');
             video.srcObject = stream;
             video.play();
