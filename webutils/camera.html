@@ -17,25 +17,51 @@
 
 <body>
     <style>
-        .container {
+        body {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
-
-            max-width: 1080px;
-            margin: auto;
         }
 
-        .container> :not(:first-child) {
-            margin-top: 8px;
+        #main {
+            display: flex;
+            flex-direction: column;
+            justify-content: stretch;
+            align-items: center;
+
+            height: 100%;
+            row-gap: 8px;
+        }
+
+        #controls {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            right: 0;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            column-gap: 8px;
+        }
+
+        #video {
+            flex: 1;
+            object-fit: cover;
         }
     </style>
 
-    <div class="container">
-        <video id="video" width="640" height="480" autoplay></video>
-        <div class="actions">
+    <div id="main">
+        <video id="video" autoplay></video>
+        <div id="controls">
             <button id="next-input">Next Input</button>
             <button id="flip-horizontally">Flip Horizontally</button>
+            <button id="fullscreen">Fullscreen</button>
         </div>
     </div>
 
@@ -47,7 +73,7 @@
         async function init() {
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
 
-            devices = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === 'videoinput');
+            devices = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === "videoinput");
             currentDeviceIndex = 0;
             await useDevice(currentDeviceIndex);
         }
@@ -61,23 +87,31 @@
                 audio: false,
             });
 
-            video = document.getElementById('video');
+            video = document.getElementById("video");
             video.srcObject = stream;
             video.play();
         }
 
-        document.getElementById('next-input').addEventListener('click', async () => {
+        document.getElementById("next-input").addEventListener("click", async () => {
             const nextIndex = (currentDeviceIndex + 1) % devices.length;
             currentDeviceIndex = nextIndex;
             await useDevice(nextIndex);
         });
 
-        document.getElementById('flip-horizontally').addEventListener('click', async () => {
-            const flipped = 'rotateY(180deg)';
+        document.getElementById("flip-horizontally").addEventListener("click", async () => {
+            const flipped = "rotateY(180deg)";
             if (video.style.transform === flipped) {
                 video.style.transform = null;
             } else {
                 video.style.transform = flipped;
+            }
+        });
+
+        document.getElementById("fullscreen").addEventListener("click", async () => {
+            if (document.fullscreenElement != null) {
+                document.exitFullscreen();
+            } else {
+                document.getElementById("main").requestFullscreen();
             }
         });
 
