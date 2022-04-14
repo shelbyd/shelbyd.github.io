@@ -26,30 +26,42 @@
             margin: auto;
         }
 
-        .container > :not(:first-child) {
+        .container> :not(:first-child) {
             margin-top: 8px;
         }
     </style>
 
     <div class="container">
         <video id="video" width="640" height="480" autoplay></video>
-        <button id="snap">Next Input</button>
+        <button id="next-input">Next Input</button>
     </div>
 
     <script type="text/javascript">
+        let devices = [];
+        let currentDeviceIndex = 0;
+
         async function init() {
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
 
             const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+            devices = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === 'videoinput');
+            currentDeviceIndex = 0;
+            await useDevice(currentDeviceIndex);
+        }
+
+        async function useDevice(index) {
+            const id = devices[index].deviceId;
+            const stream = await navigator.mediaDevices.getUserMedia({ video: { exact: id }, audio: false });
             var video = document.getElementById('video');
             video.srcObject = stream;
             video.play();
-
-            const devices = await navigator.mediaDevices.enumerateDevices();
-            for (const d of devices) {
-                console.log(d);
-            }
         }
+
+        document.getElementById('next-input').addEventListener('click', async () => {
+            const nextIndex = (currentDeviceIndex + 1) % devices.length;
+            currentDeviceIndex = nextIndex;
+            await useDevice(nextIndex);
+        });
 
         init();
     </script>
