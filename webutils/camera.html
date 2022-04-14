@@ -33,17 +33,20 @@
 
     <div class="container">
         <video id="video" width="640" height="480" autoplay></video>
-        <button id="next-input">Next Input</button>
+        <div class="actions">
+            <button id="next-input">Next Input</button>
+            <button id="flip-horizontally">Flip Horizontally</button>
+        </div>
     </div>
 
     <script type="text/javascript">
         let devices = [];
         let currentDeviceIndex = 0;
+        let video = null;
 
         async function init() {
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return;
 
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
             devices = (await navigator.mediaDevices.enumerateDevices()).filter(d => d.kind === 'videoinput');
             currentDeviceIndex = 0;
             await useDevice(currentDeviceIndex);
@@ -51,11 +54,14 @@
 
         async function useDevice(index) {
             const id = devices[index].deviceId;
+            const videoConstraint = id == "" ? true : { deviceId: { exact: id } };
+
             const stream = await navigator.mediaDevices.getUserMedia({
-                video: { deviceId: { exact: id } },
+                video: videoConstraint,
                 audio: false,
             });
-            var video = document.getElementById('video');
+
+            video = document.getElementById('video');
             video.srcObject = stream;
             video.play();
         }
@@ -64,6 +70,15 @@
             const nextIndex = (currentDeviceIndex + 1) % devices.length;
             currentDeviceIndex = nextIndex;
             await useDevice(nextIndex);
+        });
+
+        document.getElementById('flip-horizontally').addEventListener('click', async () => {
+            const flipped = 'rotateY(180deg)';
+            if (video.style.transform === flipped) {
+                video.style.transform = null;
+            } else {
+                video.style.transform = flipped;
+            }
         });
 
         init();
